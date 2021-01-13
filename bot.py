@@ -3,9 +3,14 @@ from discord.ext import commands
 import random
 import datetime
 import pytz
-import config
+from dotenv import load_dotenv
+import os
+#import config
 
-TOKEN = config.token
+#TOKEN = config.token
+
+load_dotenv()
+TOKEN = os.getenv('DISCORD_TOKEN')
 client = discord.Client()
 
 client = commands.Bot(command_prefix = '>')
@@ -67,4 +72,5 @@ async def _proverb(ctx):
         await ctx.send(random_line)
 
 
+#client.run(TOKEN)
 client.run(TOKEN)
