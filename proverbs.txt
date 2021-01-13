@@ -142,3 +142,4 @@ What cannot be cured has to be endured.
 Where there is smoke, there is fire.
 You cannot have the cake and eat it too.
 pp.
+Do you like programming? "Its complicated" -Sun Tzu
