@@ -3,15 +3,8 @@ from discord.ext import commands
 import random
 import datetime
 import pytz
-#from dotenv import load_dotenv
-#import os
-import config
-
-TOKEN = config.token
-
-"""load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-client = discord.Client()"""
+#import config
+#TOKEN = config.token
 
 client = commands.Bot(command_prefix = '>')
 
@@ -32,9 +25,9 @@ async def time(ctx, *, userTZ):
         t_timezone = datetime.datetime.now(tz=pytz.timezone(userTZ))
         index = userTZ.find('/')
         city = userTZ[index+1::]
-        print(f"""{city} {t_timezone.strftime("%a %H:%M")}""")
+        await ctx.send(f"""{city}: {t_timezone.strftime("%a %H:%M")}""")
     except Exception as e:
-        print('Invalid Timezone')
+        await ctx.send('Invalid Timezone')
 
 @client.command()
 async def jackass(ctx):
@@ -72,5 +65,4 @@ async def _proverb(ctx):
         await ctx.send(random_line)
 
 
-client.run(TOKEN)
-#client.run(TOKEN)
+client.run('NzQ2MDU1Njg1NTIyOTgwOTA1.Xz6wgA.GZM1Fm33Np6HGWGTKXippsgIkBE')
