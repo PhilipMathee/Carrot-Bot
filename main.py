@@ -15,8 +15,8 @@ bot = commands.Bot(command_prefix = '>')
 
 
 
-@commands.Cog.listener()
-async def on_ready(self):
+@bot.event
+async def on_ready():
     print('Carrot is ready to chop.') #will print in console if bot launches properly
 
 

@@ -42,7 +42,7 @@ class Extras(commands.Cog):
     #PRINTS A RANDOM PHRASE IN RESPONSE TO 8BALL
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
-        with open("8ball.txt", as 'r') as f:
+        with open("8ball.txt", 'r') as f:
             lines = f.readlines()
             await ctx.send(f'Question: {question}\nAnswer: {random.choice(lines)}')
 
