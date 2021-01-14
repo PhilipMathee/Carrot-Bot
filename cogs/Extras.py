@@ -3,18 +3,18 @@ import random
 import datetime
 import pytz
 
+'''
+This is a Cog with 'Extra' functions for the bot.
+Which includes random features that do not fit under a specific category.
+'''
+
 class Extras(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
 
-    #commands
-    @commands.Cog.listener()
-    async def on_ready(self):
-        print('Carrot is ready to chop.')
 
-
-    #events (checks client latency)
+    #prints client latency
     @commands.command()
     async def jackass(self, ctx):
         await ctx.send(f'no u {round(self.bot.latency * 1000)}ms')
@@ -37,33 +37,14 @@ class Extras(commands.Cog):
     async def _proverb(self, ctx):
         with open('proverbs.txt', 'r') as f:
             lines = f.readlines()
-            random_line = random.choice(lines)
-            await ctx.send(random_line)
+            await ctx.send(random.choice(lines))
 
     #PRINTS A RANDOM PHRASE IN RESPONSE TO 8BALL
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
-        responses = ["It is certain.",
-        "It is decidedly so.",
-        "Without a doubt.",
-        "Yes - definitely.",
-        "You may rely on it.",
-        "As I see it, yes.",
-        "Most likely.",
-        "Outlook good.",
-        "Yes.",
-        "Signs point to yes.",
-        "Reply hazy, try again.",
-        "Ask again later.",
-        "Better not tell you now.",
-        "Cannot predict now.",
-        "Concentrate and ask again.",
-        "Don't count on it.",
-        "My reply is no.",
-        "My sources say no.",
-        "Outlook not so good.",
-        "Very doubtful."]
-        await ctx.send(f'Question: {question}\nAnswer: {random.choice(responses)}')
+        with open("8ball.txt", as 'r') as f:
+            lines = f.readlines()
+            await ctx.send(f'Question: {question}\nAnswer: {random.choice(lines)}')
 
 
 def setup(bot):

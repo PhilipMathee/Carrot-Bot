@@ -4,8 +4,10 @@ import json
 import os
 
 
-
-with open("./config.json") as f:
+'''
+Load token from .json file
+'''
+with open("./config.json", "r") as f: 
     configData = json.load(f)
 
 token = configData["Token"]
@@ -13,7 +15,15 @@ bot = commands.Bot(command_prefix = '>')
 
 
 
+@commands.Cog.listener()
+async def on_ready(self):
+    print('Carrot is ready to chop.') #will print in console if bot launches properly
 
+
+
+'''
+Load extensions
+'''
 extensions = ['cogs.Extras']
 
 if __name__ == '__main__':
