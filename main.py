@@ -3,8 +3,9 @@ from discord.ext import commands
 import random
 import datetime
 import pytz
-#import config
-#TOKEN = config.token
+import config
+
+TOKEN = config.token
 
 client = commands.Bot(command_prefix = '>')
 
@@ -66,4 +67,4 @@ async def _proverb(ctx):
 
 
 
-client.run('NzQ2MDU1Njg1NTIyOTgwOTA1.Xz6wgA.GZM1Fm33Np6HGWGTKXippsgIkBE')
+client.run(TOKEN)
