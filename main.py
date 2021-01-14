@@ -7,7 +7,7 @@ import os
 '''
 Load token from .json file
 '''
-with open("./config.json", "r") as f: 
+with open("config.json", "r") as f: 
     configData = json.load(f)
 
 token = configData["Token"]
