@@ -13,13 +13,6 @@ client = commands.Bot(command_prefix = '>')
 async def on_ready():
     print('Karrot is ready to chop.')
 
-"""@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    
-    if message.content.find"""
-
 @client.command()
 async def time(ctx, *, userTZ):
     try:
