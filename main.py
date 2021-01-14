@@ -34,6 +34,13 @@ async def time(ctx, *, userTZ):
 async def jackass(ctx):
     await ctx.send(f'no u {round(client.latency * 1000)}ms')
 
+@client.command(aliases=['proverb', 'proverbs'])
+async def _proverb(ctx):
+    with open('proverbs.txt', 'r') as f:
+        lines = f.readlines()
+        random_line = random.choice(lines)
+        await ctx.send(random_line)
+
 @client.command(aliases=['8ball'])
 async def _8ball(ctx, *, question):
     responses = ["It is certain.",
@@ -57,14 +64,5 @@ async def _8ball(ctx, *, question):
     "Outlook not so good.",
     "Very doubtful."]
     await ctx.send(f'Question: {question}\nAnswer: {random.choice(responses)}')
-
-@client.command(aliases=['proverb', 'proverbs'])
-async def _proverb(ctx):
-    with open('proverbs.txt', 'r') as f:
-        lines = f.readlines()
-        random_line = random.choice(lines)
-        await ctx.send(random_line)
-
-
 
 client.run(TOKEN)
