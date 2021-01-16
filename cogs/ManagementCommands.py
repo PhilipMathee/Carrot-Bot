@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 
 class ManagementCommands(commands.Cog):
@@ -5,18 +6,53 @@ class ManagementCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.Cog.listener
-    async def on_member_join(self, ctx):
-        await ctx.send(f'Welcome to the degenerate encampment {self.bot.user}')
+    '''
+    clearing messages
+    '''
+    @commands.command()
+    async def clear(self, ctx, amount=5):
+        if (ctx.message.author.permissions_in(ctx.message.channel).manage_messages):
+            await ctx.channel.purge(limit=amount)
+    @clear.error
+    async def clear_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("You do not have permission to use clear command.")
 
-    @commands.Cog.listener
-    async def on_member_leave(self, ctx):
-        await ctx.send(f'Cheers {self.bot.user}, ')
+    '''
+    muting
+    '''
+    @commands.command()
+    async def mute(self, ctx, member : discord.Member, *, reason=None):
+        if (ctx.message.author.permissions_in(ctx.message.channel).mute_members):
+            await member.ban(reason=reason)
+    @mute.error
+    async def mute_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("You do not have permission to use mute command.")
 
-    @commands.command
-    async def ban(self):
-        pass
+    '''
+    kicking
+    '''
+    @commands.command()
+    async def kick(self, ctx, member : discord.Member, *,  reason=None):
+        if (ctx.message.author.permissions_in(ctx.message.channel).kick_members):
+            await member.kick(reason=reason)
+    @kick.error
+    async def kick_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("You do not have permission to use kick command.")
 
+    '''
+    banning
+    '''
+    @commands.command()
+    async def ban(self, ctx, member : discord.Member, *,  reason=None):
+        if (ctx.message.author.permissions_in(ctx.message.channel).ban_members):
+            await member.ban(reason=reason)
+    @ban.error
+    async def ban_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send("You do not have permission to use ban command.")
     
 
 def setup(bot):
