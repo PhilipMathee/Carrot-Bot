@@ -2,6 +2,7 @@ from discord.ext import commands
 import random
 import datetime
 import pytz
+import inspirobot
 
 '''
 This is a Cog with 'Extra' functions for the bot.
@@ -22,29 +23,34 @@ class Extras(commands.Cog):
 
     #PRINTS TIME IN SPECIFIED TIME ZONE
     @commands.command()
-    async def time(self, ctx, *, userTZ):
+    async def time(self, ctx, *, timezone):
         try:
-            t_timezone = datetime.datetime.now(tz=pytz.timezone(userTZ))
-            index = userTZ.find('/')
-            city = userTZ[index+1::]
+            t_timezone = datetime.datetime.now(tz=pytz.timezone(timezone))
+            index = timezone.find('/')
+            city = timezone[index+1::]
             await ctx.send(f"""{city}: {t_timezone.strftime("%a %H:%M")}""")
-        except Exception as e:
-            await ctx.send('Invalid Timezone')
+        except:
+            await ctx.send('Invalid Timezone.')
 
 
     #PRINTS A RANDOM PROVERB FROM PROVERBS.TXT
     @commands.command(aliases=['proverb', 'proverbs'])
     async def _proverb(self, ctx):
-        with open('proverbs.txt', 'r') as f:
+        with open('TextDocuments/proverbs.txt', 'r') as f:
             lines = f.readlines()
             await ctx.send(random.choice(lines))
 
     #PRINTS A RANDOM PHRASE IN RESPONSE TO 8BALL
     @commands.command(aliases=['8ball'])
     async def _8ball(self, ctx, *, question):
-        with open("8ball.txt", 'r') as f:
+        with open("TextDocuments/8ball.txt", 'r') as f:
             lines = f.readlines()
             await ctx.send(f'Question: {question}\nAnswer: {random.choice(lines)}')
+
+    @commands.command(aliases=['inspire'])
+    async def _inspire(self, ctx):
+        quote = inspirobot.generate()
+        await ctx.send(quote.url)
 
 
 def setup(bot):
