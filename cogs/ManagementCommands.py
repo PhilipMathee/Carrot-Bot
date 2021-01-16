@@ -13,22 +13,34 @@ class ManagementCommands(commands.Cog):
     async def clear(self, ctx, amount=5):
         if (ctx.message.author.permissions_in(ctx.message.channel).manage_messages):
             await ctx.channel.purge(limit=amount)
-    @clear.error
-    async def clear_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
+        else:
             await ctx.send("You do not have permission to use clear command.")
 
     '''
     muting
     '''
     @commands.command()
-    async def mute(self, ctx, member : discord.Member, *, reason=None):
-        if (ctx.message.author.permissions_in(ctx.message.channel).mute_members):
-            await member.ban(reason=reason)
-    @mute.error
-    async def mute_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send("You do not have permission to use mute command.")
+    async def mute(self, ctx, member: discord.Member):
+        if ctx.guild.me.top_role.position > member.top_role.position:
+        #if ctx.message.author.guild_permissions.mute_members:
+            mute = discord.utils.get(ctx.guild.roles, name='Muted')
+            await member.add_roles(mute)
+            embed=discord.Embed(title="User Muted!", description="**{0}** was muted by **{1}**!".format(member, ctx.message.author), color=0xff00f6)
+            await ctx.send(embed=embed)
+        else:
+            embed=discord.Embed(title="Permission Denied.", description="You don't have permission to use this command.", color=0xff00f6)
+            await ctx.send(embed=embed)
+
+    @commands.command()
+    async def unmute(self, ctx, member: discord.Member):
+        if ctx.message.author.guild_permissions.mute_members:
+            mute = discord.utils.get(ctx.guild.roles, name='Muted')
+            await member.remove_roles(mute)
+            embed=discord.Embed(title="User Unmuted!", description="**{0}** was unmuted by **{1}**!".format(member, ctx.message.author), color=0xff00f6)
+            await ctx.send(embed=embed)
+        else:
+            embed=discord.Embed(title="Permission Denied.", description="You don't have permission to use this command.", color=0xff00f6)
+            await ctx.send(embed=embed)
 
     '''
     kicking
@@ -37,10 +49,8 @@ class ManagementCommands(commands.Cog):
     async def kick(self, ctx, member : discord.Member, *,  reason=None):
         if (ctx.message.author.permissions_in(ctx.message.channel).kick_members):
             await member.kick(reason=reason)
-    @kick.error
-    async def kick_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
-            await ctx.send("You do not have permission to use kick command.")
+        else:
+            await ctx.send('You do not have permission to use kick command.')
 
     '''
     banning
@@ -49,11 +59,8 @@ class ManagementCommands(commands.Cog):
     async def ban(self, ctx, member : discord.Member, *,  reason=None):
         if (ctx.message.author.permissions_in(ctx.message.channel).ban_members):
             await member.ban(reason=reason)
-    @ban.error
-    async def ban_error(self, ctx, error):
-        if isinstance(error, commands.MissingPermissions):
+        else:
             await ctx.send("You do not have permission to use ban command.")
     
-
 def setup(bot):
     bot.add_cog(ManagementCommands(bot))

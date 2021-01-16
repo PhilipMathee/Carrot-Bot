@@ -51,7 +51,7 @@ class Extras(commands.Cog):
         quote = inspirobot.generate()
         await ctx.send(quote.url)
 
-
+'''
     @commands.Cog.listener()
     async def on_message(self, ctx):
         if ctx.author == self.bot.user:
@@ -63,6 +63,6 @@ class Extras(commands.Cog):
         , 'yoo', 'yooo', 'heyy', 'heyyy', 'ello', 'o/', 'heya']
         if any(word in msg.lower() for word in greet):
             await ctx.channel.send("yo gamer")
-
+'''
 def setup(bot):
     bot.add_cog(Extras(bot))
