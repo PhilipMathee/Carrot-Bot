@@ -14,7 +14,6 @@ class Extras(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-
     #prints client latency
     @commands.command()
     async def jackass(self, ctx):
@@ -52,6 +51,18 @@ class Extras(commands.Cog):
         quote = inspirobot.generate()
         await ctx.send(quote.url)
 
+
+    @commands.Cog.listener()
+    async def on_message(self, ctx):
+        if ctx.author == self.bot.user:
+            return
+
+        msg = ctx.content
+
+        greet = ['yoo', 'yo', 'hey', 'hi', 'sup', 'hello'
+        , 'yoo', 'yooo', 'heyy', 'heyyy', 'ello', 'o/', 'heya']
+        if any(word in msg.lower() for word in greet):
+            await ctx.channel.send("yo gamer")
 
 def setup(bot):
     bot.add_cog(Extras(bot))
