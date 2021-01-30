@@ -16,8 +16,8 @@ class Extras(commands.Cog):
 
     #prints client latency
     @commands.command()
-    async def jackass(self, ctx):
-        await ctx.send(f'no u {round(self.bot.latency * 1000)}ms')
+    async def ping(self, ctx):
+        await ctx.send(f'{round(self.bot.latency * 1000)}ms')
 
 
     #PRINTS TIME IN SPECIFIED TIME ZONE
@@ -27,6 +27,7 @@ class Extras(commands.Cog):
             t_timezone = datetime.datetime.now(tz=pytz.timezone(timezone))
             index = timezone.find('/')
             city = timezone[index+1::]
+            time = t_timezone.strftime("%a %H:%M")
             await ctx.send(f"""{city}: {t_timezone.strftime("%a %H:%M")}""")
         except:
             await ctx.send('Invalid Timezone.')

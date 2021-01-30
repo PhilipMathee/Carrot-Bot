@@ -8,7 +8,7 @@ class Members(commands.Cog):
 
     @commands.Cog.listener
     async def on_member_join(self, ctx):
-        await ctx.send(f'Welcome to the degenerate encampment {self.bot.user}')
+        await ctx.send(f'Welcome to the server {self.bot.user}')
 
     @commands.Cog.listener
     async def on_member_leave(self, ctx):
